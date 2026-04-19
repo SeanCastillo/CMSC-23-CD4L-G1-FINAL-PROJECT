@@ -8,6 +8,7 @@
 
 ## Tentative Folder Structure
 
+```
 my_app/
   lib/
     models/
@@ -20,6 +21,7 @@ my_app/
     widgets/
     services/
     main.dart
+```
 
 ---
 
