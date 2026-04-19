@@ -9,14 +9,14 @@
 ## Tentative Folder Structure
 
 my_app/
-┣ lib/
-┃ ┣ models/
-┃ ┣ screens/
-┃ ┃ ┣ auth/
-┃ ┃ ┗ profile/
-┃ ┣ widgets/
-┃ ┣ services/
-┃ ┗ main.dart
+└── lib/
+    ├── models/
+    ├── screens/
+    │   ├── auth/
+    │   └── profile/
+    ├── widgets/
+    ├── services/
+    └── main.dart
 
 ---
 
