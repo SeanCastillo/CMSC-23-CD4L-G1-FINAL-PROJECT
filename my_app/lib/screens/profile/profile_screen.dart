@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'profile_provider.dart';
 import 'profile_settings_screen.dart';
 
-// TODO: 
+// TODO:
 // - user display name vs username (can't be changed!)
 // - Dietary Tags
 // - Verification status
@@ -19,9 +19,7 @@ class ProfileScreen extends StatelessWidget {
   void _openSettings(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => const ProfileSettingsScreen(),
-      ),
+      MaterialPageRoute(builder: (context) => const ProfileSettingsScreen()),
     );
   }
 
@@ -33,13 +31,11 @@ class ProfileScreen extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-
             // =====================================================
             // MAIN CONTENT
             // =====================================================
             Column(
               children: [
-
                 // --- HEADER ---
                 Container(
                   height: 180,
@@ -53,8 +49,8 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 60), 
-                
+                const SizedBox(height: 60),
+
                 // user display name
                 Text(
                   "${profile.firstName} ${profile.lastName}",
@@ -99,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
             ),
 
             // =====================================================
-            // FLOATING AVATAR 
+            // FLOATING AVATAR
             // =====================================================
             Positioned(
               top: 130,
@@ -119,10 +115,7 @@ class ProfileScreen extends StatelessWidget {
                             File(profile.imagePath!),
                             fit: BoxFit.cover,
                           )
-                        : Image.asset(
-                            "assets/profile.jpg",
-                            fit: BoxFit.cover,
-                          ),
+                        : Image.asset("assets/profile.jpg", fit: BoxFit.cover),
                   ),
                 ),
               ),
@@ -141,7 +134,6 @@ class ProfileScreen extends StatelessWidget {
                 onPressed: () => _openSettings(context),
               ),
             ),
-            
 
             // --- BACK ---
             Positioned(
@@ -149,7 +141,13 @@ class ProfileScreen extends StatelessWidget {
               left: 10,
               child: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/login',
+                    (route) => false,
+                  );
+                },
               ),
             ),
           ],
