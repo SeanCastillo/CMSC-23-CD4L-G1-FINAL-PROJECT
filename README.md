@@ -84,6 +84,22 @@ lib/
 
 ---
 
+## Firestore Structure (Milestone 2)
+
+```
+items (collection)
+  └── itemId
+        title
+        description
+        ownerId
+        imageUrl
+        expirationDate
+        status (available/reserved/completed)
+        createdAt
+```
+
+---
+
 ## Project Roles
 
 **(1) auth**  
