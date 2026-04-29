@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'services/camera_service.dart';
+
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/signup_screen.dart';
-import 'screens/profile/profile_screen.dart';
-import 'screens/profile/profile_provider.dart';
+import 'screens/profile/screens/profile_screen.dart';
+import 'screens/profile/providers/profile_provider.dart';
+import 'screens/profile/providers/tags_provider.dart';
 
-void main() {
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // --- INIT SERVICES ---
+  await CameraService.init();
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider(create: (_) => TagsProvider()),
       ],
       child: const MyApp(),
     ),
