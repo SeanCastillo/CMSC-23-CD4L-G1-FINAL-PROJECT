@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'services/camera_service.dart';
+import 'theme/app_theme.dart'; 
 
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/signup_screen.dart';
@@ -10,9 +11,8 @@ import 'screens/profile/providers/profile_provider.dart';
 import 'screens/profile/providers/tags_provider.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // --- INIT SERVICES ---
   await CameraService.init();
 
@@ -34,11 +34,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Food Sharing App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
+      title: 'Hatid',
+
+      // ← swap the old green theme for the hatid theme
+      theme: AppTheme.light,
 
       initialRoute: '/login',
 

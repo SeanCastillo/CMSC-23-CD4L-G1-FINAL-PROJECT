@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // =====================================================
-// NAVIGATION BUTTONS
+// PROFILE NAV BUTTONS — glass circle buttons on header
 // =====================================================
 class ProfileNavButtons extends StatelessWidget {
   final VoidCallback onEdit;
@@ -12,32 +12,65 @@ class ProfileNavButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-
-        // --- EDIT PROFILE (SETTINGS) ---
         Positioned(
           top: 10,
           right: 10,
-          child: IconButton(
-            icon: const Icon(Icons.edit, color: Colors.white),
-            onPressed: onEdit,
+          child: SafeArea(
+            child: _GlassNavBtn(icon: Icons.edit_outlined, onPressed: onEdit),
           ),
         ),
-        // --- RETURN TO LOGIN PAGE (FOR NOW) ---
         Positioned(
           top: 10,
           left: 10,
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/login',
-                (route) => false,
-              );
-            },
+          child: SafeArea(
+            child: _GlassNavBtn(
+              icon: Icons.arrow_back,
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/login',
+                  (route) => false,
+                );
+              },
+            ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class _GlassNavBtn extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  const _GlassNavBtn({required this.icon, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          // fix: withOpacity → withValues
+          color: Colors.white.withValues(alpha: 0.18),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.30),
+            width: 1.2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.10),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Icon(icon, color: Colors.white, size: 18),
+      ),
     );
   }
 }

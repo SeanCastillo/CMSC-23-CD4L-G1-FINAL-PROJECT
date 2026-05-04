@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../../../../theme/app_colors.dart';
 
 // =====================================================
-// MANAGE TAGS POPUP (select / deselect tags)
+// MANAGE TAGS POPUP
 // =====================================================
 class ManageTagsPopup extends StatefulWidget {
   final List<String> options;
@@ -18,19 +20,14 @@ class ManageTagsPopup extends StatefulWidget {
 }
 
 class _ManageTagsPopupState extends State<ManageTagsPopup> {
-  // --- TEMPORARY SELECTED STATE (user selection before saving) ---
   late List<String> tempSelected;
 
   @override
-  // initialize temp state from provided selected tags
   void initState() {
     super.initState();
     tempSelected = List.from(widget.selected);
   }
 
-  // =====================================================
-  // TOGGLE TAG SELECTION (add/ remove tag)
-  // =====================================================
   void toggleTag(String tag) {
     setState(() {
       if (tempSelected.contains(tag)) {
@@ -43,44 +40,72 @@ class _ManageTagsPopupState extends State<ManageTagsPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.cream,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
       padding: EdgeInsets.only(
-        left: 16,
-        right: 16,
-        top: 16,
-        // fix for keyboard overflows... dawg...
-        bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+        left: 20,
+        right: 20,
+        top: 20,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // =====================================================
-          // HEADER
-          // =====================================================
+          // drag handle
+          Container(
+            width: 36,
+            height: 4,
+            margin: const EdgeInsets.only(bottom: 18),
+            decoration: BoxDecoration(
+              color: AppColors.blush,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+
+          // header
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // --- TITLE ---
-              const Text(
-                "Manage Tags",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                'Manage Tags',
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
               ),
-              // --- SAVE BUTTON ---
               TextButton(
-                onPressed: () {
-                  // return selected tags to caller
-                  Navigator.pop(context, tempSelected);
-                },
-                child: const Text("Save"),
+                onPressed: () => Navigator.pop(context, tempSelected),
+                style: TextButton.styleFrom(
+                  backgroundColor: AppColors.maroon,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                child: Text(
+                  'Save',
+                  style: GoogleFonts.nunito(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13,
+                  ),
+                ),
               ),
             ],
           ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
 
-          // =====================================================
-          // TAG SELECTION GRID
-          // =====================================================
+          // tag chips
           Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -88,28 +113,34 @@ class _ManageTagsPopupState extends State<ManageTagsPopup> {
               final isSelected = tempSelected.contains(tag);
 
               return GestureDetector(
-                // --- TOGGLE TAG ON TAP ---
                 onTap: () => toggleTag(tag),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
+                    horizontal: 14,
                     vertical: 8,
                   ),
-                  // =====================================================
-                  // TAG CHIP STYLING (SELECTED / UNSELECTED)
-                  // =====================================================
                   decoration: BoxDecoration(
-                    color: isSelected ? Colors.green : Colors.white,
+                    color: isSelected ? AppColors.maroon : AppColors.blush,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: isSelected ? Colors.green : Colors.grey.shade300,
-                    ),
+                    boxShadow: isSelected
+                        ? [
+                            BoxShadow(
+                              // fix: withOpacity → withValues
+                              color: AppColors.maroon.withValues(alpha: 0.20),
+                              blurRadius: 8,
+                              offset: const Offset(0, 3),
+                            ),
+                          ]
+                        : null,
                   ),
                   child: Text(
                     tag,
-                    style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black87,
+                    style: GoogleFonts.nunito(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: isSelected ? Colors.white : AppColors.maroon,
                     ),
                   ),
                 ),
@@ -117,7 +148,7 @@ class _ManageTagsPopupState extends State<ManageTagsPopup> {
             }).toList(),
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 8),
         ],
       ),
     );
