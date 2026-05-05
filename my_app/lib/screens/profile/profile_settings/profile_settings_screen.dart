@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../providers/profile_provider.dart';
-import '../../widgets/base_profile_layout.dart';
-import '../../widgets/verified_user.dart';
-import 'profile_settings_user_page.dart';
-import '../../widgets/profile_settings_about.dart';
-import 'profile_settings_security_page.dart';
+import '../../../providers/profile_provider.dart';
+import '../widgets/profile/base_profile_layout.dart';
+import '../widgets/profile/verified_user.dart';
+import 'profile_settings_user_screen.dart';
+import '../widgets/profile/profile_settings_about.dart';
+import 'profile_settings_security_screen.dart';
 
 // =====================================================
 // PROFILE SETTINGS SCREEN
@@ -113,7 +113,11 @@ class ProfileSettingsScreen extends StatelessWidget {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    // TODO: logout logic hereeee
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/login',
+                      (route) => false,
+                    );
                   },
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.red,

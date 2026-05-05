@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
-import '../providers/profile_provider.dart';
-import 'tags/tags_section.dart';
+import 'package:provider/provider.dart';
+import '../../../../providers/profile_provider.dart';
+import '../profile_tags/tags_section.dart';
 import 'verified_user.dart';
 
 // =====================================================
 // PROFILE CARD
 // =====================================================
-class ProfileCard extends StatelessWidget {
-  final ProfileProvider profile;
+class ProfileCard extends StatefulWidget {
 
-  const ProfileCard({super.key, required this.profile});
+  const ProfileCard({super.key,});
+
+  @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
+    final profile = context.watch<ProfileProvider>();
+
     return Column(
       children: [
         const SizedBox(height: 10),
@@ -78,40 +86,20 @@ class ProfileCard extends StatelessWidget {
         // =====================================================
         // TAGS SECTION (DIETARY / INTERESTS)
         // =====================================================
-        const TagsSection(),
+        TagsSection(
+          dietaryTags: profile.dietaryTags,
+          interestTags: profile.interestTags,
 
-        const SizedBox(height: 10),
+          onDietaryChanged: (tags) {
+            profile.setDietaryTags(tags);
+          },
 
-        // =====================================================
-        // PANTRY SECTION
-        // =====================================================
-
-        // --- PANTRY HEADER ---
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              "Pantry",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
+          onInterestChanged: (tags) {
+            profile.setInterestTags(tags);
+          },
         ),
 
         const SizedBox(height: 10),
-
-        // --- PANTRY CONTENT (PLACEHOLDER) ---
-        const SizedBox(
-          height: 200,
-          child: Center(
-            child: Text(
-              "Your posts / pantry items go here",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ),
-        ),
-
-        const SizedBox(height: 20),
       ],
     );
   }

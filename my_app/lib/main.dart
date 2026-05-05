@@ -5,9 +5,10 @@ import 'services/camera_service.dart';
 
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/signup_screen.dart';
-import 'screens/profile/screens/profile_screen.dart';
-import 'screens/profile/providers/profile_provider.dart';
-import 'screens/profile/providers/tags_provider.dart';
+import 'screens/profile/profile_screen.dart';
+import 'providers/profile_provider.dart';
+import 'providers/tags_provider.dart';
+import 'providers/pantry_provider.dart';
 
 void main() async {
 
@@ -21,6 +22,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => TagsProvider()),
+        ChangeNotifierProvider(create: (_) => PantryProvider()),
       ],
       child: const MyApp(),
     ),
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignupScreen(),
-        '/profile': (context) => const ProfileScreen(),
+        '/profile': (context) => ProfileScreen(),
       },
     );
   }

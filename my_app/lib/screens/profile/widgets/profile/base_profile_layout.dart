@@ -6,6 +6,7 @@ import 'profile_header.dart';
 // =====================================================
 class BaseProfileLayout extends StatelessWidget {
   final Widget child;
+  final bool enableScroll;
   final Widget? header;
   final String? title;
   final bool showBackButton;
@@ -14,6 +15,7 @@ class BaseProfileLayout extends StatelessWidget {
   const BaseProfileLayout({
     super.key,
     required this.child,
+    this.enableScroll = true,
     this.header,
     this.title,
     this.showBackButton = false,
@@ -53,11 +55,24 @@ class BaseProfileLayout extends StatelessWidget {
             ),
             child: SafeArea(
               top: false,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  child: child,
-                ),
+              child: SizedBox.expand(
+              child: enableScroll
+                  ? SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                        child: child,
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
+                      child: child,
+                    ),
               ),
             ),
           ),

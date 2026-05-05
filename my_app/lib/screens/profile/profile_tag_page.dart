@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/base_profile_layout.dart';
-import '../../../utils/dupli_validator.dart';
+import 'widgets/profile/base_profile_layout.dart';
+import '../../utils/dupli_validator.dart';
 
 // =====================================================
 // CUSTOM TAG CREATION PAGE

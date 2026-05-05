@@ -359,7 +359,7 @@ class _CameraCapturePageState extends State<CameraCapturePage> {
 
   // =====================================================
   // UI
-  // =====================================================  
+  // =====================================================
   @override
   Widget build(BuildContext context) {
     if (_controller == null || !_controller!.value.isInitialized) {
@@ -443,7 +443,9 @@ class _CameraCapturePageState extends State<CameraCapturePage> {
   }
 }
 
-// ================= UI HELPERS =================
+// =====================================================
+// UI
+// =====================================================
 
 class _OverlayPainter extends CustomPainter {
   final double w;

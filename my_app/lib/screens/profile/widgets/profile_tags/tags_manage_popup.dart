@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../../providers/tags_provider.dart';
 
 // =====================================================
 // MANAGE TAGS POPUP (select / deselect tags)
@@ -25,7 +27,7 @@ class _ManageTagsPopupState extends State<ManageTagsPopup> {
   // initialize temp state from provided selected tags
   void initState() {
     super.initState();
-    tempSelected = List.from(widget.selected);
+    tempSelected = List<String>.from(widget.selected);
   }
 
   // =====================================================
@@ -36,7 +38,7 @@ class _ManageTagsPopupState extends State<ManageTagsPopup> {
       if (tempSelected.contains(tag)) {
         tempSelected.remove(tag);
       } else {
-        tempSelected.add(tag);
+        tempSelected = [...tempSelected, tag];
       }
     });
   }
@@ -68,7 +70,23 @@ class _ManageTagsPopupState extends State<ManageTagsPopup> {
               // --- SAVE BUTTON ---
               TextButton(
                 onPressed: () {
-                  // return selected tags to caller
+                  final provider = context.read<TagsProvider>();
+
+                  // find removed tags
+                  final removedTags = widget.selected
+                      .where((tag) => !tempSelected.contains(tag))
+                      .toList();
+
+                  for (final tag in removedTags) {
+                    // Only remove if it's a CUSTOM tag
+                    if (widget.options.contains(tag)) {
+                      // detect tab automatically
+                      final isDietary = provider.getAllDietary().contains(tag);
+
+                      provider.removeCustomTag(tag, isDietary ? 0 : 1);
+                    }
+                  }
+
                   Navigator.pop(context, tempSelected);
                 },
                 child: const Text("Save"),

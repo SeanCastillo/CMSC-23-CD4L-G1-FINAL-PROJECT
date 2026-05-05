@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../providers/tags_provider.dart';
 
 // =====================================================
 // TAGS TOGGLE TAB SWITCHING UI (DIETARY / INTERESTS)
 // =====================================================
 class TagsToggle extends StatelessWidget {
-  const TagsToggle({super.key});
+  final int selectedIndex;
+  final ValueChanged<int> onChanged;
+
+  const TagsToggle({
+    super.key,
+    required this.selectedIndex,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final tags = context.watch<TagsProvider>();
-
     return Container(
       height: 36,
 
@@ -25,9 +28,9 @@ class TagsToggle extends StatelessWidget {
       child: Row(
         children: [
           // --- DIETARY TAB BUTTON ---
-          _button(context, "Dietary", 0, tags),
+          _button("Dietary", 0),
           // --- INTEREST TAB BUTTON ---
-          _button(context, "Interests", 1, tags),
+          _button("Interests", 1),
         ],
       ),
     );
@@ -36,22 +39,17 @@ class TagsToggle extends StatelessWidget {
   // =====================================================
   // BUILD TOGGLE BUTTON
   // =====================================================
-  Widget _button(
-    BuildContext context,
-    String title,
-    int index,
-    TagsProvider tags,
-  ) {
-    final selected = tags.selectedTab == index;
+  Widget _button(String title, int index) {
+    final selected = selectedIndex == index;
 
     return Expanded(
       child: GestureDetector(
-
         // --- TAB SWITCH ACTION ---
-        onTap: () => tags.setTab(index),
+        onTap: () => onChanged(index),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           alignment: Alignment.center,
+
           // --- BUTTON STYLING (SELECTED / UNSELECTED)
           decoration: BoxDecoration(
             color: selected ? Colors.green : Colors.transparent,

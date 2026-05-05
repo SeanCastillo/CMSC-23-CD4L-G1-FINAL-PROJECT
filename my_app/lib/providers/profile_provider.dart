@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-
-// =====================================================
-// PROFILE PROVIDER
-// =====================================================
 class ProfileProvider extends ChangeNotifier {
-
   // --- USER DATA ---
-  String userName = "username"; // NOTE: treated as uid for now
+  String userName = "username";
   String name = "Jane Doe";
   String email = "jane@email.com";
   String role = "community_member";
 
-  bool isVerified = false; // 👈 NEW
+  // --- TAGS ---
+  List<String> dietaryTags = [];
+  List<String> interestTags = [];
+
+  bool isVerified = false; 
 
   List<String> tags = [];
 
@@ -53,10 +52,15 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   // =====================================================
-  // UPDATE TAGS 
+  // UPDATE TAGS
   // =====================================================
-  void updateTags(List<String> newTags) {
-    tags = newTags;
+  void setDietaryTags(List<String> tags) {
+    dietaryTags = List.from(tags);
+    notifyListeners();
+  }
+
+  void setInterestTags(List<String> tags) {
+    interestTags = List.from(tags);
     notifyListeners();
   }
 }
